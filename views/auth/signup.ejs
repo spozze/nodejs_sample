@@ -1,0 +1,42 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/login.css">
+<%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <% if (errorMessage) { %>
+            <div class="user-message user-message--error">
+                <% for (let i = 0; i < errorMessage.length; i++) { %>
+                    <%= errorMessage[i] %>
+                    <% if (i != errorMessage.length-1) { %>
+                        </br>
+                    <% } %>
+                <% } %>
+            </div>
+        <% } %>
+        <form class="login-form" action="/signup" method="post">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
+            <div class="form-control">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" value="<%= oldInput.name %>"
+                    class="<%= validationErrors.find(e => e.path == 'name') ? 'invalid' : '' %>"/>
+            </div>
+            <div class="form-control">
+                <label for="email">Email</label>
+                <input type="text" name="email" id="email" value="<%= oldInput.email %>"
+                class="<%= validationErrors.find(e => e.path == 'email') ? 'invalid' : '' %>"/>
+            </div>
+            <div class="form-control">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" value="<%= oldInput.password %>"
+                class="<%= validationErrors.find(e => e.path == 'password') ? 'invalid' : '' %>"/>
+            </div>
+            <div class="form-control">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" name="confirmPassword" id="confirmPassword" value="<%= oldInput.confirmPassword %>"
+                class="<%= validationErrors.find(e => e.path == 'confirmPassword') ? 'invalid' : '' %>"/>
+            </div>
+            <button class="btn" type="submit">Signup</button>
+        </form>
+    </main>
+<%- include('../includes/end.ejs') %>

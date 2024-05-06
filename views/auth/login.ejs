@@ -1,0 +1,35 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/login.css">
+<%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <% if (errorMessage) { %>
+            <div class="user-message user-message--error">
+                <% for (let i = 0; i < errorMessage.length; i++) { %>
+                    <%= errorMessage[i] %>
+                    <% if (i != errorMessage.length-1) { %>
+                        </br>
+                    <% } %>
+                <% } %>
+            </div>
+        <% } %>
+        <form class="login-form" action="/login" method="post">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
+            <div class="form-control">
+                <label for="email">Email</label>
+                <input type="text" name="email" id="email" value="<%= oldInput.email %>"
+                class="<%= validationErrors.find(e => e.path == 'email') ? 'invalid' : '' %>"/>
+            </div>
+            <div class="form-control">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" value="<%= oldInput.password %>"
+                class="<%= validationErrors.find(e => e.path == 'password') ? 'invalid' : '' %>"/>
+            </div>
+            <button class="btn" type="submit">Login</button>
+        </form>
+        <div class="centered">
+            <a href="/reset">Reset Password</a>
+        </div>
+    </main>
+<%- include('../includes/end.ejs') %>
